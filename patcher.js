@@ -186,4 +186,8 @@ module.exports = (inputDolPath) => {
     const outputDolPath = resolve(dirname(inputDolPath), `main.dol`);
     fs.writeFileSync(outputDolPath, mainDol);
     logger.success(`Patched DOL file saved to: ${outputDolPath}`);
+    console.log("Exiting in 5 seconds...")
+    setTimeout(function() {
+      process.exit();
+    }, 5000);
 };
