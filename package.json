@@ -1,7 +1,7 @@
 {
   "name": "patcher-wii",
   "description": "PatcherWii patches games that are supported by DanceParty to have access to it's servers.",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "bin": "index.js",
   "main": "index.js",
   "scripts": {
