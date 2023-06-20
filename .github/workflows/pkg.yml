@@ -1,0 +1,22 @@
+name: Pkg Action
+uses: lando/pkg-action@v2.2.2
+runs-on: ubuntu-20.04
+strategy:
+  matrix:
+    arch:
+      - x64
+      - arm64
+    node-version:
+      - node16
+    os:
+      - linux
+      - macos
+      - win
+steps:
+  - name: Package into node binary
+    uses: lando/pkg-action@v2
+    with:
+      entrypoint: index.js
+      arch: ${{ matrix.arch }}
+      node-version: ${{ matrix.node-version }}
+      os: ${{ matrix.os }}
