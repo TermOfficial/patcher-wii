@@ -32,7 +32,7 @@ const colors = {
 };
 winston.addColors(colors); // Add colors
 
-const level = global.logLevel || process.env.LOG_LEVEL || "debug";
+const level = process.env.LOG_LEVEL || global.logLevel || "debug";
 
 const format = winston.format.combine(
     winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }), // Date format

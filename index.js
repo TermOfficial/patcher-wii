@@ -1,3 +1,4 @@
+require("dotenv").config();
 const { resolve } = require("path");
 
 const cli = require("./cli");

@@ -7,21 +7,29 @@ const NAS = 'nas.lgc.danceparty.lol';
 const SHOP = 'shop.lgc.danceparty.lol';
 const GS_WDF = 'gs-wdf.lgc.danceparty.lol';
 const GS_WDF_JD5 = 'gs-wdf-jd5.lgc.danceparty.lol';
-const GS_JMCS = 'gs-jmcs.lgc.danceparty.lol';
+const GS_RHODE = 'gs-rhode.lgc.danceparty.lol';
 const TRACKING = 'trk-wii.lgc.danceparty.lol';
 
 const STRINGS = {
-  // NAS #
+  /* --- NAS --- */
   'https://naswii.nintendowifi.net/ac': `http://${NAS}/ac`,
   'https://naswii.nintendowifi.net/pr': `http://${NAS}/pr`,
-  // Shop #
+  /* --- NAS --- */
+
+  /* --- SHOP --- */
   'https://ecs.shop.wii.com/ecs/services/ECommerceSOAP': `http://${SHOP}/ecs/ECommerceSOAP`,
-  // WS #
+  
+  /* --- WDF (GS) --- */
+  'https://wii-dance6-ws1.ubisoft.com/wdfjd6': `http://${GS_WDF}/wdfjd6`,
   'https://wii-dance6-ws1.ubisoft.com': `http://${GS_WDF}`,
-  'https://wii-dance6-ws2.ubisoft.com': `http://${GS_JMCS}`,
+
+  /* --- JMCS (GS) --- */
+  'https://wii-dance6-ws2.ubisoft.com': `http://${GS_RHODE}`,
+  
   'wii-dance6-ws1.ubisoft.com': GS_WDF,
-  'wii-dance6-ws2.ubisoft.com': GS_JMCS,
-  'wdfjd6': 'wdflgc',
+  'wii-dance6-ws2.ubisoft.com': GS_RHODE,
+
+  //'wdfjd6': 'wdflgc',
   // Tracking #
   'https://tracking-wii-dance.ubisoft.com': `http://${TRACKING}`,
 };
@@ -46,9 +54,9 @@ const STRINGS_JD15 = {
   'https://ecs.shop.wii.com/ecs/services/ECommerceSOAP': `http://${SHOP}/ecs/ECommerceSOAP`,
   // WS #
   'https://wii-dance6-ws1.ubisoft.com': `http://${GS_WDF}`,
-  'https://wii-dance6-ws2.ubisoft.com': `http://${GS_JMCS}`,
+  'https://wii-dance6-ws2.ubisoft.com': `http://${GS_RHODE}`,
   'wii-dance6-ws1.ubisoft.com': GS_WDF,
-  'wii-dance6-ws2.ubisoft.com': GS_JMCS,
+  'wii-dance6-ws2.ubisoft.com': GS_RHODE,
   'wdfjd6': 'wdfjd6',
   // Tracking #
   'https://tracking-wii-dance.ubisoft.com': `http://${TRACKING}`,
@@ -60,14 +68,13 @@ module.exports = (inputDolPath) => {
     const GAMES = [2018, 2017, 2016, 2015, 2014]; // Game versions
     const JD5_IDS = ['SJOP41', 'SJOE41', 'SJME89']; // Game IDs for JD5
   
-    let jdVersion;
-  
     let mainDol = fs.readFileSync(inputDolPath);
+    let jdVersion;
 
     // Check if the dol contains any old server URLs we used before.
     let oldDomains = ["danceparty.online", "dancepartyonline.tk", "justdanceonline.net"];
     oldDomains.forEach(d => {
-        if (mainDol.includes(d)) {
+        if (mainDol.includes(Buffer.from(d))) {
             logger.error(`Your DOL file is not an original file because it contains our old servers and must be updated. Please update it by patching the original DOL file.`);
             process.exit(1);
         };
@@ -86,7 +93,7 @@ module.exports = (inputDolPath) => {
       ) {
         jdVersion = game;
         break;
-      }
+      };
     };
   
     // If no JD Version was found
@@ -102,7 +109,7 @@ module.exports = (inputDolPath) => {
         "Either the game is not supported, or you have a broken game dump."
       );
       process.exit(1);
-    }
+    };
   
     // 2014 games and 2014 mods have the same DOL but different ID
     // and we can't detect ID from DOL (for 2014 only) so we check for boot.bin file
@@ -129,20 +136,24 @@ module.exports = (inputDolPath) => {
       // information to tell the difference while data is sent to tracking.
       switch (id) {
         case "SJME89":
-          logger.info("JDJAPAN (SJME89) was detected.")
-  
-          STRINGS_JD5['wiitracking'] = 'jdjapantrkw';
+          logger.info("JDJAPAN (SJME89) was detected.");
+          STRINGS_JD5['wiitracking'] = 'jdjapan-trk';
           STRINGS_JD5['2399fff0497ae598539ccb3a61387f67833055ad'] = 'a09302313bd087b88a54fe1a010eb62ea3edbfad';
           STRINGS_JD5['JejDUqq7'] = 'DFe3qab8';
       }
-    }
+    };
   
     // If version is 2014, replace STRINGS with STRINGS_JD5
     let STRINGS_USED = jdVersion === 2014 ? STRINGS_JD5 : STRINGS;
     // If version is 2015, replace STRINGS with STRINGS_JD15
     if (jdVersion === 2015) STRINGS_USED = STRINGS_JD15;
+
+    // Before patching starts, make sure to backup the original DOL file
+    const backupDolPath = resolve(dirname(inputDolPath), `backup-dol-${jdVersion}.dol`);
+    fs.copyFileSync(inputDolPath, backupDolPath);
   
     logger.info('Patching DOL...');
+
     let index = 0;
     for (const [key, value] of Object.entries(STRINGS_USED)) {
       // key = original string
@@ -152,28 +163,34 @@ module.exports = (inputDolPath) => {
       const keyBuffer = Buffer.from(key);
       let valueBuffer = Buffer.from(value);
   
-      // str to replace is bigger than original value so we have to add extra 00 at the end
-      if (valueLen > keyLen) {
-        const diff = valueLen - keyLen;
+      // str to replace is shorter than original value so we have to add extra 00 at the end
+      if (keyLen > valueLen) {
+        logger.debug("---------- VALUE SHORTER THAN ORIGINAL ----------")
+        const diff = keyLen - valueLen;
         const nulls = Array(diff).fill('00').join('');
         const nullsBuf = Buffer.from(nulls, 'hex');
-        valueBuffer = Buffer.concat([valueBuffer, nullsBuf])
+        valueBuffer = Buffer.concat([valueBuffer, nullsBuf]);
+        logger.debug(`${value} is shorter than ${key} with difference: ${keyLen-valueLen} / ${keyLen} ${valueLen}`);
+        logger.debug()
+        logger.debug("------------------------------------------------")
       };
   
       if (mainDol.includes(keyBuffer)) {
         replacedData = replace(mainDol, keyBuffer, valueBuffer);
         mainDol = replacedData;
         index += 1;
+        logger.debug(`Replaced ${key} with ${value} / key len: ${keyLen} , val len: ${valueLen}`)
       }
       else {
         // Only throw error about missing Shop URL 
         // if the game has a shop feature but the URL is missing (which is unlikely to happen?)
         if(!key.includes("shop.wii.com")) {
-          logger.warn(`${key} doesn't exist in the DOL file, are you sure it's the original file?`)
-        }
+          logger.debug(`${key} doesn't exist in the DOL file, are you sure it's the original file?`)
+        };
       };
     };
   
+    // If there was no modified strings
     if (index == 0) {
       logger.warn(`None of the strings were replaced, which means your DOL file was not patched. Are you sure it's the original file?`);
       process.exit(1);
@@ -181,11 +198,12 @@ module.exports = (inputDolPath) => {
   
     logger.success('Patching completed!');
 
-    // Patching was completed, backup original DOL file and write the patched dol to "main.dol"
-    const backupDolPath = resolve(dirname(inputDolPath), `backup-dol-${jdVersion}.dol`);
+    // Patching was completed, save the file
     const outputDolPath = resolve(dirname(inputDolPath), `main.dol`);
     fs.writeFileSync(outputDolPath, mainDol);
     logger.success(`Patched DOL file saved to: ${outputDolPath}`);
+
+    // Exit in 5
     console.log("Exiting in 5 seconds...")
     setTimeout(function() {
       process.exit();

@@ -1,6 +1,9 @@
 dist/
 logs/
 node_modules/
+.github/workflows/pkg.yml
+
+.envrc
 .DS_Store
 
 *.dol

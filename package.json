@@ -11,22 +11,23 @@
   "license": "ISC",
   "dependencies": {
     "buffer-replace": "^1.0.0",
+    "dotenv": "^16.3.1",
     "fs": "^0.0.1-security",
     "path": "^0.12.7",
     "winston": "^3.9.0",
     "yargs": "^17.7.2"
   },
   "engines": {
-    "node": "^16 || ^14 || ^12"
+    "node": "^17 || ^16 || ^14 || ^12"
   },
   "pkg": {
-    "targets": [ 
-      "node16-win-x64", 
-      "node16-win-arm64", 
-      "node16-macos-x64", 
-      "node16-macos-arm64", 
-      "node16-linux-x64",  
-      "node16-linux-arm64" 
+    "targets": [
+      "node16-win-x64",
+      "node16-win-arm64",
+      "node16-macos-x64",
+      "node16-macos-arm64",
+      "node16-linux-x64",
+      "node16-linux-arm64"
     ],
     "outputPath": "dist"
   }
