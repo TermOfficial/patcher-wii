@@ -20,6 +20,29 @@ const STRINGS = {
   'https://ecs.shop.wii.com/ecs/services/ECommerceSOAP': `http://${SHOP}/ecs/ECommerceSOAP`,
   
   /* --- WDF (GS) --- */
+  'https://wii-dance6-ws1.ubisoft.com/wdfjd6': `http://${GS_WDF}/wdflgc`,
+  'https://wii-dance6-ws1.ubisoft.com': `http://${GS_WDF}`,
+
+  /* --- JMCS (GS) --- */
+  'https://wii-dance6-ws2.ubisoft.com': `http://${GS_RHODE}`,
+  
+  'wii-dance6-ws1.ubisoft.com': GS_WDF,
+  'wii-dance6-ws2.ubisoft.com': GS_RHODE,
+
+  /* --- JMCS (GS) --- */
+  'https://tracking-wii-dance.ubisoft.com': `http://${TRACKING}`,
+};
+
+const STRINGS_JD15 = {
+  /* --- NAS --- */
+  'https://naswii.nintendowifi.net/ac': `http://${NAS}/ac`,
+  'https://naswii.nintendowifi.net/pr': `http://${NAS}/pr`,
+  /* --- NAS --- */
+
+  /* --- SHOP --- */
+  'https://ecs.shop.wii.com/ecs/services/ECommerceSOAP': `http://${SHOP}/ecs/ECommerceSOAP`,
+  
+  /* --- WDF (GS) --- */
   'https://wii-dance6-ws1.ubisoft.com/wdfjd6': `http://${GS_WDF}/wdfjd6`,
   'https://wii-dance6-ws1.ubisoft.com': `http://${GS_WDF}`,
 
@@ -29,8 +52,7 @@ const STRINGS = {
   'wii-dance6-ws1.ubisoft.com': GS_WDF,
   'wii-dance6-ws2.ubisoft.com': GS_RHODE,
 
-  //'wdfjd6': 'wdflgc',
-  // Tracking #
+  /* --- JMCS (GS) --- */
   'https://tracking-wii-dance.ubisoft.com': `http://${TRACKING}`,
 };
 
@@ -44,22 +66,6 @@ const STRINGS_JD5 = {
   'https://tracking-wii-dance.ubisoft.com/wdf/': `http://${GS_WDF_JD5}/wdf/`,
   // Tracking #
   'https://tracking-wii-dance.ubisoft.com/': `http://${TRACKING}`,
-};
-
-const STRINGS_JD15 = {
-  // NAS #
-  'https://naswii.nintendowifi.net/ac': `http://${NAS}/ac`,
-  'https://naswii.nintendowifi.net/pr': `http://${NAS}/pr`,
-  // Shop #
-  'https://ecs.shop.wii.com/ecs/services/ECommerceSOAP': `http://${SHOP}/ecs/ECommerceSOAP`,
-  // WS #
-  'https://wii-dance6-ws1.ubisoft.com': `http://${GS_WDF}`,
-  'https://wii-dance6-ws2.ubisoft.com': `http://${GS_RHODE}`,
-  'wii-dance6-ws1.ubisoft.com': GS_WDF,
-  'wii-dance6-ws2.ubisoft.com': GS_RHODE,
-  'wdfjd6': 'wdfjd6',
-  // Tracking #
-  'https://tracking-wii-dance.ubisoft.com': `http://${TRACKING}`,
 };
 
 module.exports = (inputDolPath) => {
@@ -202,6 +208,7 @@ module.exports = (inputDolPath) => {
     const outputDolPath = resolve(dirname(inputDolPath), `main.dol`);
     fs.writeFileSync(outputDolPath, mainDol);
     logger.success(`Patched DOL file saved to: ${outputDolPath}`);
+    logger.success(`You can now pack the game or run it from "main.dol" file on Dolphin!`);
 
     // Exit in 5
     console.log("Exiting in 5 seconds...")
