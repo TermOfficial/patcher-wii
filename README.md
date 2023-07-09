@@ -65,4 +65,4 @@ Please note that Just Dance 2019 and 2020 do not have World Dance Floor support.
 
 - [X] Just Dance Japan *(by Yunyl)*
 
-If you require further assistance, feel free to join our [Discord server](https://discord.gg/msKfjrqfCm). We'll be happy to help!
+If you require further assistance, feel free to join our [Discord server](https://discord.gg/d4t6cqbmmk). We'll be happy to help!
