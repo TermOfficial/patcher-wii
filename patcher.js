@@ -20,7 +20,7 @@ const STRINGS = {
   'https://naswii.nintendowifi.net/pr': `http://${NAS}/pr`,
 
   /* --- SHOP --- */
-  'https://ecs.shop.wii.com/ecs/services/ECommerceSOAP': `http://${SHOP}/ecs/ECommerceSOAP`,
+  //'https://ecs.shop.wii.com/ecs/services/ECommerceSOAP': `http://${SHOP}/ecs/ECommerceSOAP`,
 
   /* --- WDF (GS) --- */
   'https://wii-dance6-ws1.ubisoft.com/wdfjd6': `http://${GS_WDF}/legacy`,
@@ -81,11 +81,18 @@ module.exports = (inputDolPath) => {
   // Fetch JD Version by reading a binary flag in the DOL.
   logger.info('Fetching the Just Dance version...');
   for (const game of GAMES) {
-    // Engine desc JD{game}_{platform}_LEGACY
-    // JD5 (legacy) does not have this flag, so we check the Title Just Dance Just Dance® {game}
+    // We loop through each game version to see which flag exists in the DOL.
+    // For 2015-2016-2017-2018: "JD{game}_{platform}_LEGACY"
+    // For 2014: Just Dance® {game}
+    const flag = `JD${game}`;
+    const flagJD5 = Buffer.concat([
+      Buffer.from("4A7573742044616E6365AE20", "hex"), 
+      Buffer.from(game.toString())
+    ]);
+
     if (
-      mainDol.includes(`JD${game}`) ||
-      mainDol.includes(`Just Dance\xAE ${game}`)
+      mainDol.includes(flag) ||
+      mainDol.includes(flagJD5)
     ) {
       jdVersion = game;
       break;
