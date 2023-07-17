@@ -122,6 +122,6 @@ module.exports = async ({ format, game, gameId, region, version, inputFile, isFr
 
   if (!isFromFormat) {
     logger.success(`Patched DOL file saved to: ${outputDolPath}`);
-    logger.success(`You can now pack the game or run it from "main.dol" file on Dolphin.`);
+    logger.success(`You can now pack the game with the patched DOL or run it directly from "main.dol" file on Dolphin.`);
   };
 };

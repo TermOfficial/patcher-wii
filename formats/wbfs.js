@@ -10,8 +10,8 @@ const utils = require("../lib/utils");
 module.exports = async ({ game, gameId, region, version, inputFile }) => {
 
     // Extract the WBFS content to tmp/WBFS/GAMEID/
-    const wbfsOutputPath = path.resolve(__dirname, "../tmp/", gameId, format);
-    if (existsSync(wbfsOutputPath)) rmSync(wbfsOutputPath, { recursive: true, force: true }); // wit automatically creates the folder, if it exists before wit, delete it
+    const tmpFolder = utils.tmpFolder();
+    const wbfsOutputPath = path.resolve(tmpFolder, gameId, format);
     
     // Extract WBFS content
     await wit.extract(format, inputFile, wbfsOutputPath);
@@ -29,7 +29,7 @@ module.exports = async ({ game, gameId, region, version, inputFile }) => {
     const patchedFilePath = utils.getPatchedFilePath(inputFile, format, game, gameId);
     // If output file exists from older patches, remove it
     if (existsSync(patchedFilePath)) {
-        logger.warn(`Output file "${patchedFilePath}" already exists and it will be overwritten.`);
+        logger.warn(`Output path "${patchedFilePath}" already exists and it will be overwritten.`);
         rmSync(patchedFilePath, { force: true });
     };
 
@@ -37,6 +37,5 @@ module.exports = async ({ game, gameId, region, version, inputFile }) => {
     logger.success(`Done! Your game was patched and saved to path ${patchedFilePath}`);
 
     // Clear TMP folder
-    utils.clearTmp();
-    
+    utils.removeTmpFolder(tmpFolder);
 };

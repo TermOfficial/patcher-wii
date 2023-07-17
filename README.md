@@ -1,6 +1,13 @@
 # PatcherWii
 
-PatcherWii is a user-friendly tool designed to simplify the process of patching your **main.dol** files. These files contain the contents of the original servers, and PatcherWii enables you to replace them with DanceParty servers effortlessly.
+PatcherWii is a user-friendly tool designed to simplify the process of patching your Just Dance games on Wii to let you access the **DanceParty Legacy** world. 
+
+## What files can I patch?
+- [X] ISO
+- [X] WBFS
+- [X] DOL `(main.dol)`
+- [X] NKIT / GCZ
+  - NKIT files aren't currently supported. You can convert your NKIT files to ISO by using [NKIT tools by Vimm](https://vimm.net/vault/?p=nkit).
 
 ## Usage
 
@@ -8,7 +15,7 @@ There are three different ways you can use PatcherWii:
 
 ### 1. Downloading Pre-built Releases
 
-You can easily download pre-built releases of PatcherWii from the [GitHub releases page](https://github.com/dancepartyonline/patcher-wii/tags). Once downloaded, simply drag and drop your original DOL file onto the tool, and it will automatically patch it for you.
+You can easily download pre-built releases of PatcherWii from the [GitHub releases page](https://github.com/dancepartyonline/patcher-wii/tags). Once downloaded, simply drag and drop your WBFS / ISO or DOL  file onto the tool, and it will automatically patch it for you.
 
 ### 2. Running with Node.JS
 
@@ -18,9 +25,9 @@ To run PatcherWii with Node.JS, follow these steps:
 2. Clone the PatcherWii repository using the command: `git clone https://github.com/dancepartyonline/patcher-wii.git && cd patcher-wii`
 3. Install the necessary dependencies with the command: `npm i`
 4. Once the installation is complete, you can run the tool and view the available CLI options by executing `node index.js`.
-5. To patch a bundle directly, use the following command: `node index.js path/to/original/main/dol`.
-   For example: `node index.js C:/Users/Example/Desktop/DanceParty-2016/DATA/sys/main.dol`
-6. PatcherWii will automatically patch your DOL file and save it, while also creating a backup for safety.
+5. To patch a bundle directly, use the following command: `node index.js path/to/wbfs/iso/or/dol`.
+   For example: `node index.js C:/Users/Example/Desktop/JD2016.iso`
+6. PatcherWii will automatically patch your ISO file and save it as a new file. If you're patching DOL files, it will create a backup for it.
 
 ### 3. Building from Source
 
@@ -35,21 +42,23 @@ If you prefer to build PatcherWii from source, follow these steps:
 
 With these simple instructions, you can easily patch your main.dol files and replace the original servers with DanceParty servers using PatcherWii. Enjoy the enhanced experience!
 
+### Services Explanation
+- **NAS**: Authentication server by Nintendo
+- **Rhode**: Handles leaderboards, online challengers, Just Dance Wall, and streamable maps
+- **WDF**: Facilitates World Dance Floor connections
+- **Tracking**: Used by the game to report bugs, issues, and errors, helping us improve the service. You can comment it out if desired.
+- **Shop**: In-game store server
+
+------------
+
+### Where can I find WBFS or ISO of Just Dance games?
+We cannot provide such information, you need to dump your legally owned game from your homebrewed Wii to WBFS or ISO format.
+
 ### What is a DOL file and where can I find it?
 
 A DOL file, contains the source code of a game. Our tool patches this file to replace the old server URLs with our own, establishing a connection between you and the servers.
 
-### Services Explanation
-- NAS: Authentication server by Nintendo
-- WS: Game servers
-  - Rhode: Handles leaderboards, online challengers, Just Dance Wall, and streamable maps
-  - WDF: Facilitates World Dance Floor connections
-- Tracking: Used by the game to report bugs, issues, and errors, helping us improve the service. You can comment it out if desired.
-- Shop-ECS: In-game store server
-
-------------
-
-To obtain the DOL file, you can extract it by dumping the files from your **legally** owned game. Look for the DOL file in the `DATA/sys` folder. If you're using Dolphin emulator, you need to dump the entire disc starting from the root directory.
+To obtain the DOL file, you can extract it by dumping the files from your **legally** owned game via tools such as **WiiBackupFusion**. Look for the DOL file in the `DATA/sys` folder. If you're using Dolphin emulator, you need to dump the entire disc starting from the root directory.
 
 ### Supported Games
 
