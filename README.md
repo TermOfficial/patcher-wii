@@ -15,7 +15,7 @@ There are three different ways you can use PatcherWii:
 
 ### 1. Downloading Pre-built Releases
 
-You can easily download pre-built releases of PatcherWii from the [GitHub releases page](https://github.com/dancepartyonline/patcher-wii/tags). Once downloaded, simply drag and drop your WBFS / ISO or DOL  file onto the tool, and it will automatically patch it for you.
+You can easily download pre-built releases of PatcherWii from the [releases page](https://github.com/dancepartyonline/patcher-wii/tags). Once downloaded, simply drag and drop your WBFS / ISO or DOL  file onto the tool, and it will automatically patch it for you.
 
 ### 2. Running with Node.JS
 
