@@ -1,9 +1,15 @@
 dist/
 logs/
 node_modules/
+test/
+tmp/
 
 .envrc
 .DS_Store
 
 *.dol
 *.log
+*.iso
+*.wbfs
+*.nkit
+*.gcz
