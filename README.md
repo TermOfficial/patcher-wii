@@ -6,7 +6,7 @@ PatcherWii is a user-friendly tool designed to simplify the process of patching 
 - [X] ISO
 - [X] WBFS
 - [X] DOL `(main.dol)`
-- [X] NKIT / GCZ
+- [ ] NKIT / GCZ
   - NKIT files aren't currently supported. You can convert your NKIT files to ISO by using [NKIT tools by Vimm](https://vimm.net/vault/?p=nkit).
 
 ## Usage
