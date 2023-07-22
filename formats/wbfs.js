@@ -32,7 +32,8 @@ module.exports = async ({ game, gameId, region, version, inputFile }) => {
         logger.warn(`Output path "${patchedFilePath}" already exists and it will be overwritten.`);
         rmSync(patchedFilePath, { force: true });
     };
-
+    
+    // Pack the files back to WBFS
     await wit.copy(format, wbfsOutputPath, patchedFilePath, true);
     logger.success(`Done! Your game was patched and saved to path ${patchedFilePath}`);
 

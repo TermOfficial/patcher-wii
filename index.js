@@ -54,18 +54,19 @@ if (!existsSync(appDataPath)) {
 
   const inputPath = args["_"][0]; // Input file
   if (!existsSync(inputPath) || !statSync(inputPath).isFile()) {
-    logger.error(`Provided path does not exist or it"s not a file, please provide an ISO, WBFS or a DOL file.`);
+    logger.error(`Provided path does not exist or it's not a file, please provide an ISO, WBFS or a DOL file.`);
     process.exit(1);
   }
 
+  // Detect format of input file
+  // If input is DOL it will also find it's jdVersion via dol-game-finder lib
   const detectedFormat = await utils.detectFormat(inputPath);
   if (!detectedFormat) {
     logger.error(`Couldn"t detect the format of the input file, please provide an ISO, WBFS or a DOL file.`);
     process.exit(1);
   };
 
-  let { format, gameId, version } = detectedFormat;
-
+  const { format, gameId, version } = detectedFormat;
   const games = new Games();
 
   let game;

@@ -33,6 +33,7 @@ module.exports = async ({ game, gameId, region, version, inputFile }) => {
         rmSync(patchedFilePath, { force: true });
     };
 
+    // Pack the files back to ISO
     await wit.copy(format, isoOutputPath, patchedFilePath);
     logger.success(`Done! Your game was patched and saved to path ${patchedFilePath}`);
 

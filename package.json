@@ -34,7 +34,9 @@
     ],
     "outputPath": "dist",
     "assets": [
-      "./bin/**"
+      "./bin/wit/darwin/**",
+      "./bin/wit/linux/**",
+      "./bin/wit/win32/**"
     ]
   }
 }
