@@ -20,7 +20,7 @@ module.exports = async ({ game, gameId, region, version, inputFile }) => {
 
     // Find DOL
     let dolPath = path.resolve(wbfsOutputPath, "DATA/sys/main.dol");
-    let dolPathNoData = path.resolve(wbfsOutputPath, "DATA/sys/main.dol"); // some inputs might not have an UPDATE partition so the DATA files get extracted straight into the folder, so check for that DOL path too
+    let dolPathNoData = path.resolve(wbfsOutputPath, "sys/main.dol"); // some inputs might not have an UPDATE partition so the DATA files get extracted straight into the folder, so check for that DOL path too
     if (!existsSync(dolPath)) {
         if (!existsSync(dolPathNoData)) {
             logger.error(`Can't find DOL file, what the fuck happened?`);
