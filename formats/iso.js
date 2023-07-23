@@ -12,6 +12,7 @@ module.exports = async ({ game, gameId, region, version, inputFile }) => {
     // Extract the ISO content to tmp/ISO/GAMEID/
     const tmpFolder = utils.tmpFolder();
     const isoOutputPath = path.resolve(tmpFolder, gameId, format);
+    logger.debug("tmp folder for extracted content " + tmpFolder);
     
     // Extract ISO content
     await wit.extract(format, inputFile, isoOutputPath);

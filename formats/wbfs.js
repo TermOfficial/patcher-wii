@@ -1,7 +1,7 @@
 const format = "WBFS";
 
 const path = require("path");
-const { existsSync, rmSync, unlinkSync } = require("fs");
+const { existsSync, rmSync } = require("fs");
 
 const wit = require("../lib/wit");
 const DOL = require("./dol");
@@ -12,6 +12,7 @@ module.exports = async ({ game, gameId, region, version, inputFile }) => {
     // Extract the WBFS content to tmp/WBFS/GAMEID/
     const tmpFolder = utils.tmpFolder();
     const wbfsOutputPath = path.resolve(tmpFolder, gameId, format);
+    logger.debug("tmp folder for extracted content " + tmpFolder);
     
     // Extract WBFS content
     await wit.extract(format, inputFile, wbfsOutputPath);
@@ -20,7 +21,7 @@ module.exports = async ({ game, gameId, region, version, inputFile }) => {
     const dolPath = path.resolve(wbfsOutputPath, "DATA/sys/main.dol");
     if (!existsSync(dolPath)) {
         logger.error(`Can't find DOL file, what the fuck happened?`);
-        process.exit(1);
+        process.exit(1); 
     };
 
     // Patch the DOL

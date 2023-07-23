@@ -44,7 +44,9 @@ if (!existsSync(appDataPath)) {
   global.project = project;
   global.appData = appDataPath;
   global.args = args;
-  global.logLevel = args.logLevel || process.env.LOG_LEVEL;
+  global.isDebug = (args.debug && args.debug == true) || false;
+  global.logLevel = global.isDebug ? "debug" : "info";
+  //console.log(global.isDebug, global.logLevel)
 
   const Games = require("./lib/games");
 
