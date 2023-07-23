@@ -12,7 +12,6 @@ module.exports = async ({ game, gameId, region, version, inputFile }) => {
     // Extract the WBFS content to tmp/WBFS/GAMEID/
     const tmpFolder = utils.tmpFolder();
     const wbfsOutputPath = path.resolve(tmpFolder, gameId, format);
-    console.log(wbfsOutputPath)
     logger.debug("tmp folder for extracted content " + tmpFolder);
     
     // Extract WBFS content
