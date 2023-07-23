@@ -12,16 +12,21 @@ module.exports = async ({ game, gameId, region, version, inputFile }) => {
     // Extract the WBFS content to tmp/WBFS/GAMEID/
     const tmpFolder = utils.tmpFolder();
     const wbfsOutputPath = path.resolve(tmpFolder, gameId, format);
+    console.log(wbfsOutputPath)
     logger.debug("tmp folder for extracted content " + tmpFolder);
     
     // Extract WBFS content
     await wit.extract(format, inputFile, wbfsOutputPath);
 
     // Find DOL
-    const dolPath = path.resolve(wbfsOutputPath, "DATA/sys/main.dol");
+    let dolPath = path.resolve(wbfsOutputPath, "DATA/sys/main.dol");
+    let dolPathNoData = path.resolve(wbfsOutputPath, "DATA/sys/main.dol"); // some inputs might not have an UPDATE partition so the DATA files get extracted straight into the folder, so check for that DOL path too
     if (!existsSync(dolPath)) {
-        logger.error(`Can't find DOL file, what the fuck happened?`);
-        process.exit(1); 
+        if (!existsSync(dolPathNoData)) {
+            logger.error(`Can't find DOL file, what the fuck happened?`);
+            process.exit(1);
+        }
+        else dolPath = dolPathNoData;
     };
 
     // Patch the DOL
