@@ -43,7 +43,7 @@ module.exports = async ({ format, game, gameId, region, version, inputFile, isFr
     };
 
     // Check if the JD5 game is available to patch
-    if (!JD5_IDS.includes(gameId)) {
+    if (!global.config.JD5_IDS.includes(gameId)) {
       logger.error(`Your 'main.dol' ID ${gameId} is not available to patch.`);
       process.exit(1);
     };
