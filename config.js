@@ -3,12 +3,12 @@ const PAL = "PAL";
 const NTSC = "NTSC";
 
 // Server domains
-const NAS = 'nas.lgc.danceparty.lol';
-const SHOP = 'shop.lgc.danceparty.lol';
-const GS_WDF = 'gs-wdf.lgc.danceparty.lol';
-const GS_WDF_JD5 = 'gs-wdf-jd5.lgc.danceparty.lol';
-const GS_RHODE = 'gs-rhode.lgc.danceparty.lol';
-const TRACKING = 'trk-wii.lgc.danceparty.lol';
+const NAS = '12000.termy.lol';
+const SHOP = '42000.termy.lol';
+const GS_WDF = '6000.termy.lol';
+const GS_WDF_JD5 = '6000.termy.lol';
+const GS_RHODE = '3001.termy.lol';
+const TRACKING = '30000.termy.lol';
 
 // Room names
 const ROOM_LEGACY = "legacy"; // 2016 - 2017 - 2018 and above
